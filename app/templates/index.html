@@ -1,10 +1,116 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Index page</title>
+   <title>My App</title>
+   <!-- Bootstrap CSS -->
+   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+   <style>
+      /* Adjust table style */
+      table {
+         border-collapse: collapse;
+         width: 100%;
+      }
+      th, td {
+         text-align: left;
+         padding: 8px;
+      }
+      tr:nth-child(even) {
+         background-color: #f2f2f2;
+      }
+   </style>
 </head>
 <body>
-The hostname of the container is <b>{{ hostname }}</b> and its IP is <b>{{ ip }}</b>.
+   <div class="container">
+      <h1>My App</h1>
+
+      <!-- Create Form -->
+      <div class="card">
+         <div class="card-header">
+            <h2>Create</h2>
+         </div>
+         <div class="card-body">
+            <form method="POST" action="/create">
+               <div class="row mb-3">
+        <label for="driveId" class="col-sm-2 col-form-label">Drive Link</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="driveId" placeholder="Drive LInk" required>
+        </div>
+               </div>
+                  <div class="row mb-3">
+        <label for="animeLink" class="col-sm-2 col-form-label">Anime Link</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="animeLink" placeholder="Anime LInk" required>
+        </div>
+    </div>
+    <div class="row mb-3">
+        <label for="totalEpisodes" class="col-sm-2 col-form-label">Total Episodes</label>
+        <div class="col-sm-10">
+            <input type="number" class="form-control" id="totalEpisodes" placeholder="Number of Episodes" required>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-10 offset-sm-2">
+            <button type="submit" class="btn btn-primary">Create</button>
+        </div>
+    </div>
+            </form>
+         </div>
+      </div>
+
+      <!-- Existing Data Table -->
+      <div class="card mt-3">
+         <div class="card-header">
+            <h2>Existing Data</h2>
+         </div>
+         <div class="card-body">
+            <table class="table">
+               <thead>
+                  <tr>
+                     <th>Actions</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  {% for user in users %}
+                  <tr>
+                     <td>
+                        <form method="POST" action="/update">
+                           <input type="hidden" name="_id" value="{{ user.id }}">
+                           <div class="form-row">
+                              <div class="form-group col-md-8">
+                                 <label for="driveId">Drive Id:</label>
+                                 <input type="text" id="driveId" name="driveId" class="form-control" value="{{ user.id }}" required>
+                              </div>
+                              <div class="form-group col-md-6">
+                                 <label for="driveId">Anime Link:</label>
+                                 <input type="text" id="animeLink" name="animeLink" class="form-control" value="{{ user.link }}" required>
+                              </div>
+                              <div class="form-group col-md-4">
+                                 <label for="age">Total Episodes:</label>
+                                 <input type="number" id="totalEpisodes" name="totalEpisodes" class="form-control" value="{{ user.total }}" required>
+                              </div>
+                              <div class="form-group col-md-2">
+                                 <button type="submit" class="btn btn-primary">Update</button>
+                              </div>
+                           </div>
+                        </form>
+                        <form method="POST" action="/delete">
+                           <input type="hidden" name="_id" value="{{ user.id }}">
+                           <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
+                     </td>
+                  </tr>
+                  {% endfor %}
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+
+
+
+   <!-- Bootstrap JS -->
+   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
 </html>
